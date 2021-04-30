@@ -11,6 +11,9 @@
       <Version>6.2.11</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.5.0" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Uno.Core" Version="2.3.0" />
     <PackageReference Include="Uno.UI" Version="3.6.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
@@ -19,7 +22,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>bb5b2356-0872-4f90-9470-e0c83e27406e</ProjectGuid>
+    <ProjectGuid>{BB5B2356-0872-4F90-9470-E0C83E27406E}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>POSUNO</RootNamespace>
