@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Text="Clientes" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-            <Button Content="Adicionar Cliente" HorizontalAlignment="Right" Background="Navy" Foreground="White" Margin="0,-40,0,0"/>
+            <Button Content="Adicionar Cliente" HorizontalAlignment="Right" Background="Navy" Foreground="White" Margin="0,-40,0,0" Click="AddCustomerButton_Click"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -69,7 +69,7 @@
                             <TextBlock Grid.Column="4" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Text="{x:Bind Email}"/>
                             <CheckBox  Grid.Column="5" VerticalAlignment="Center" FontSize="14" IsEnabled="False"   IsChecked="{x:Bind IsActive}"/>
                             <StackPanel Grid.Column="6" Orientation="Horizontal">
-                                <Image Source="/Assets/edit.png"   Margin="5,0" Height="25" VerticalAlignment="Center"/>
+                                <Image Source="/Assets/edit.png"   Margin="5,0" Height="25" VerticalAlignment="Center" Tapped="EditImage_Tapped"/>
                                 <Image Source="/Assets/delete.png" Margin="5,0" Height="25" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Grid>

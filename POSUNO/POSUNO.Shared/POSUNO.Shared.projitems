@@ -21,6 +21,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\Loader.xaml.cs">
       <DependentUpon>Loader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\CustomerDialog.xaml.cs">
+      <DependentUpon>CustomerDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ApiService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RegexUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
@@ -47,6 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Components\Loader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Dialogs\CustomerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -78,6 +85,8 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\close.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\customer.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\delete.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\edit.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\exit.png" />
