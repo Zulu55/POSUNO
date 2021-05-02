@@ -22,12 +22,12 @@
         </StackPanel>
         <NavigationView Grid.Row="1" IsPaneOpen="False">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Clientes">
+                <NavigationViewItem Content="Clientes" Tapped="CustomersNavigationViewItem_Tapped">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="People"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Productos">
+                <NavigationViewItem Content="Productos" Tapped="ProductsNavigationViewItem_Tapped">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="SolidStar"/>
                     </NavigationViewItem.Icon>
