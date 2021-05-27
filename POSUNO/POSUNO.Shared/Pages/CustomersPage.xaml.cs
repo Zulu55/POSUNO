@@ -59,6 +59,28 @@ namespace POSUNO.Pages
             Customer customer = new Customer();
             CustomerDialog dialog = new CustomerDialog(customer);
             await dialog.ShowAsync();
+            if (!customer.WasSaved)
+            {
+                return;
+            }
+
+            customer.User = MainPage.GetInstance().User;
+
+            Loader loader = new Loader("Por favor espere...");
+            loader.Show();
+            Response response = await ApiService.PostAsync("Customers", customer);
+            loader.Close();
+
+            if (!response.IsSuccess)
+            {
+                MessageDialog messageDialog = new MessageDialog(response.Message, "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            Customer newCustomer = (Customer)response.Result;
+            Customers.Add(newCustomer);
+            RefreshList();
         }
 
         private async void EditImage_Tapped(object sender, TappedRoutedEventArgs e)
