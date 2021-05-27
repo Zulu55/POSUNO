@@ -3,6 +3,7 @@ using POSUNO.Dialogs;
 using POSUNO.Helpers;
 using POSUNO.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.UI.Popups;
@@ -89,6 +90,29 @@ namespace POSUNO.Pages
             customer.IsEdit = true;
             CustomerDialog dialog = new CustomerDialog(customer);
             await dialog.ShowAsync();
+            if (!customer.WasSaved)
+            {
+                return;
+            }
+
+            customer.User = MainPage.GetInstance().User;
+
+            Loader loader = new Loader("Por favor espere...");
+            loader.Show();
+            Response response = await ApiService.PutAsync("Customers", customer, customer.Id);
+            loader.Close();
+
+            if (!response.IsSuccess)
+            {
+                MessageDialog messageDialog = new MessageDialog(response.Message, "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            Customer newCustomer = (Customer)response.Result;
+            Customer oldCustomer = Customers.FirstOrDefault(c => c.Id == newCustomer.Id);
+            oldCustomer = newCustomer;
+            RefreshList();
         }
     }
 }
