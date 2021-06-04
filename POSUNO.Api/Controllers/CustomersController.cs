@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using POSUNO.Api.Data;
 using POSUNO.Api.Data.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace POSUNO.Api.Controllers
 {
@@ -32,7 +30,7 @@ namespace POSUNO.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            Customer customer = await _context.Customers.FindAsync(id);
 
             if (customer == null)
             {
@@ -106,7 +104,7 @@ namespace POSUNO.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            Customer customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
