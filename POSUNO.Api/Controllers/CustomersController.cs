@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace POSUNO.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
         private readonly DataContext _context;
