@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using POSUNO.Api.Data;
 using POSUNO.Api.Data.Entities;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 namespace POSUNO.Api.Controllers
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
@@ -19,14 +22,12 @@ namespace POSUNO.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
             return await _context.Customers.ToListAsync();
         }
 
-        // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
@@ -40,7 +41,6 @@ namespace POSUNO.Api.Controllers
             return customer;
         }
 
-        // PUT: api/Customers/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, Customer customer)
         {
@@ -77,7 +77,6 @@ namespace POSUNO.Api.Controllers
             return Ok(customer);
         }
 
-        // POST: api/Customers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
