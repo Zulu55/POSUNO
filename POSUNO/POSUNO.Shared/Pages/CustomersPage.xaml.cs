@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using System.Threading.Tasks;
 
 namespace POSUNO.Pages
 {
@@ -83,6 +84,46 @@ namespace POSUNO.Pages
             Customers.Add(newCustomer);
             RefreshList();
         }
+
+        private async void DeleteImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ContentDialogResult result = await ConfirmDeleteAsync();
+            if (result != ContentDialogResult.Primary)
+            {
+                return;
+            }
+
+            Loader loader = new Loader("Por favor espere...");
+            loader.Show();
+            Customer customer = Customers[CustomersListView.SelectedIndex];
+            Response response = await ApiService.DeleteAsync("Customers", customer.Id);
+            loader.Close();
+
+            if (!response.IsSuccess)
+            {
+                MessageDialog messageDialog = new MessageDialog(response.Message, "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            List<Customer> customers = Customers.Where(c => c.Id != customer.Id).ToList();
+            Customers = new ObservableCollection<Customer>(customers);
+            RefreshList();
+        }
+
+        private async Task<ContentDialogResult> ConfirmDeleteAsync()
+        {
+            ContentDialog confirmDialog = new ContentDialog
+            {
+                Title = "Confirmación",
+                Content = "¿Estás seguro de querer borrar el registro?",
+                PrimaryButtonText = "Sí",
+                CloseButtonText = "No"
+            };
+
+            return await confirmDialog.ShowAsync();
+        }
+
 
         private async void EditImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
