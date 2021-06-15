@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace POSUNO.Api.Data.Entities
 {
@@ -27,6 +28,7 @@ namespace POSUNO.Api.Data.Entities
         public bool IsActive { get; set; }
 
         [Required]
+        [JsonIgnore]
         public User User { get; set; }
     }
 }

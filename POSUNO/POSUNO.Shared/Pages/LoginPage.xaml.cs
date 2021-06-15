@@ -33,25 +33,19 @@ namespace POSUNO.Pages
                 Email = EmailTextBox.Text,
                 Password = PasswordPasswordBox.Password
             });
+
             loader.Close();
 
             MessageDialog messageDialog;
             if (!response.IsSuccess)
-            {
-                messageDialog = new MessageDialog(response.Message, "Error");
-                await messageDialog.ShowAsync();
-                return;
-            }
-
-            User user = (User)response.Result;
-            if (user == null)
             {
                 messageDialog = new MessageDialog("Usuario o contraseña incorrectos", "Error");
                 await messageDialog.ShowAsync();
                 return;
             }
 
-            Frame.Navigate(typeof(MainPage), user);
+            TokenResponse token = (TokenResponse)response.Result;
+            Frame.Navigate(typeof(MainPage), token);
         }
 
         private async Task<bool> ValidForm()

@@ -6,6 +6,7 @@ using POSUNO.Api.Data;
 using POSUNO.Api.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace POSUNO.Api.Controllers
@@ -49,14 +50,28 @@ namespace POSUNO.Api.Controllers
                 return BadRequest();
             }
 
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == customer.User.Email);
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
                 return BadRequest("Usuario no existe.");
             }
 
             customer.User = user;
-            _context.Entry(customer).State = EntityState.Modified;
+
+            Customer oldCustomer = await _context.Customers.FindAsync(id);
+            if (oldCustomer == null)
+            {
+                return BadRequest("Cliente no existe.");
+            }
+
+            oldCustomer.FirstName = customer.FirstName;
+            oldCustomer.LastName = customer.LastName;
+            oldCustomer.Phonenumber = customer.Phonenumber;
+            oldCustomer.Address = customer.Address;
+            oldCustomer.Email = customer.Email;
+            oldCustomer.IsActive = customer.IsActive;
+            _context.Entry(oldCustomer).State = EntityState.Modified;
 
             try
             {
@@ -80,7 +95,8 @@ namespace POSUNO.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == customer.User.Email);
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
                 return BadRequest("Usuario no existe.");
@@ -99,7 +115,6 @@ namespace POSUNO.Api.Controllers
             return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
         }
 
-        // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {

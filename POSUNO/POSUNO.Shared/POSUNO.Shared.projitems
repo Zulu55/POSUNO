@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\LoginRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Response.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TokenResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\CustomersPage.xaml.cs">
       <DependentUpon>CustomersPage.xaml</DependentUpon>

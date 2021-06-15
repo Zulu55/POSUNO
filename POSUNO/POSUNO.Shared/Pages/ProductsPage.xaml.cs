@@ -29,7 +29,7 @@ namespace POSUNO.Pages
         {
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.GetListAsync<Product>("products");
+            Response response = await ApiService.GetListAsync<Product>("products", MainPage.GetInstance().Token.Token);
             loader.Close();
 
             if (!response.IsSuccess)
