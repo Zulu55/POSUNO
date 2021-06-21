@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace POSUNO.Api.Data.Entities
@@ -13,9 +12,5 @@ namespace POSUNO.Api.Data.Entities
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
-
-        public ICollection<Product> Products { get; set; }
-
-        public ICollection<Customer> Customers { get; set; }
     }
 }
