@@ -38,20 +38,13 @@ namespace POSUNO.Pages
             MessageDialog messageDialog;
             if (!response.IsSuccess)
             {
-                messageDialog = new MessageDialog(response.Message, "Error");
+                messageDialog = new MessageDialog("Email o contraseña incorrectos.", "Error");
                 await messageDialog.ShowAsync();
                 return;
             }
 
-            User user = (User)response.Result;
-            if (user == null)
-            {
-                messageDialog = new MessageDialog("Usuario o contraseña incorrectos", "Error");
-                await messageDialog.ShowAsync();
-                return;
-            }
-
-            Frame.Navigate(typeof(MainPage), user);
+            TokenResponse tokenResponse = (TokenResponse)response.Result;
+            Frame.Navigate(typeof(MainPage), tokenResponse);
         }
 
         private async Task<bool> ValidForm()

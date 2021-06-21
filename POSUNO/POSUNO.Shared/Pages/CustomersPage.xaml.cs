@@ -66,7 +66,7 @@ namespace POSUNO.Pages
                 return;
             }
 
-            customer.User = MainPage.GetInstance().User;
+            customer.User = MainPage.GetInstance().TokenResponse.User;
 
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
@@ -136,7 +136,7 @@ namespace POSUNO.Pages
                 return;
             }
 
-            customer.User = MainPage.GetInstance().User;
+            customer.User = MainPage.GetInstance().TokenResponse.User;
 
             Loader loader = new Loader("Por favor espere...");
             loader.Show();

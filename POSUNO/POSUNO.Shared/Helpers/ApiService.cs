@@ -28,7 +28,7 @@ namespace POSUNO.Helpers
                     BaseAddress = new Uri(url)
                 };
 
-                HttpResponseMessage response = await client.PostAsync("api/Account/Login", content);
+                HttpResponseMessage response = await client.PostAsync("api/Account/CreateToken", content);
                 string result = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
                 {
@@ -39,11 +39,11 @@ namespace POSUNO.Helpers
                     };
                 }
 
-                User user = JsonConvert.DeserializeObject<User>(result);
+                TokenResponse tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(result);
                 return new Response
                 {
                     IsSuccess = true,
-                    Result = user,
+                    Result = tokenResponse,
                 };
             }
             catch (Exception ex)

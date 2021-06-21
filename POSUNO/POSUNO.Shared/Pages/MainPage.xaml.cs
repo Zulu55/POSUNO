@@ -17,7 +17,7 @@ namespace POSUNO.Pages
             _instance = this;
         }
 
-        public User User { get; set; }
+        public TokenResponse TokenResponse { get; set; }
 
         public static MainPage GetInstance()
         {
@@ -27,8 +27,8 @@ namespace POSUNO.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            User = (User)e.Parameter;
-            WelcomeTextBlock.Text = $"Bienvenid@: {User.FullName}";
+            TokenResponse = (TokenResponse)e.Parameter;
+            WelcomeTextBlock.Text = $"Bienvenid@: {TokenResponse.User.FullName}";
             MyFrame.Navigate(typeof(CustomersPage));
         }
 
