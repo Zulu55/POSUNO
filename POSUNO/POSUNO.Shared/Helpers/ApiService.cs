@@ -40,11 +40,11 @@ namespace POSUNO.Helpers
                     };
                 }
 
-                TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(result);
+                TokenResponse tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(result);
                 return new Response
                 {
                     IsSuccess = true,
-                    Result = token,
+                    Result = tokenResponse,
                 };
             }
             catch (Exception ex)

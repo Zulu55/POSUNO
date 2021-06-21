@@ -34,7 +34,7 @@ namespace POSUNO.Pages
         {
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.GetListAsync<Customer>("customers", MainPage.GetInstance().Token.Token);
+            Response response = await ApiService.GetListAsync<Customer>("customers", MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)
@@ -59,7 +59,6 @@ namespace POSUNO.Pages
         private async void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             Customer customer = new Customer();
-            customer.User = MainPage.GetInstance().Token.User;
             CustomerDialog dialog = new CustomerDialog(customer);
             await dialog.ShowAsync();
             if (!customer.WasSaved)
@@ -69,7 +68,7 @@ namespace POSUNO.Pages
 
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.PostAsync("Customers", customer, MainPage.GetInstance().Token.Token);
+            Response response = await ApiService.PostAsync("Customers", customer, MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)
@@ -95,7 +94,7 @@ namespace POSUNO.Pages
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
             Customer customer = Customers[CustomersListView.SelectedIndex];
-            Response response = await ApiService.DeleteAsync("Customers", customer.Id, MainPage.GetInstance().Token.Token);
+            Response response = await ApiService.DeleteAsync("Customers", customer.Id, MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)
@@ -127,7 +126,6 @@ namespace POSUNO.Pages
         private async void EditImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Customer customer = Customers[CustomersListView.SelectedIndex];
-            customer.User = MainPage.GetInstance().Token.User;
             customer.IsEdit = true;
             CustomerDialog dialog = new CustomerDialog(customer);
             await dialog.ShowAsync();
@@ -138,7 +136,7 @@ namespace POSUNO.Pages
 
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.PutAsync("Customers", customer, customer.Id, MainPage.GetInstance().Token.Token);
+            Response response = await ApiService.PutAsync("Customers", customer, customer.Id, MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)

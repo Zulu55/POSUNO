@@ -33,7 +33,6 @@ namespace POSUNO.Pages
                 Email = EmailTextBox.Text,
                 Password = PasswordPasswordBox.Password
             });
-
             loader.Close();
 
             MessageDialog messageDialog;
@@ -44,8 +43,8 @@ namespace POSUNO.Pages
                 return;
             }
 
-            TokenResponse token = (TokenResponse)response.Result;
-            Frame.Navigate(typeof(MainPage), token);
+            TokenResponse tokenResponse = (TokenResponse)response.Result;
+            Frame.Navigate(typeof(MainPage), tokenResponse);
         }
 
         private async Task<bool> ValidForm()

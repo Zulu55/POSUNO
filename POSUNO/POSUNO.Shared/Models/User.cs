@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace POSUNO.Models
 {
@@ -10,12 +10,6 @@ namespace POSUNO.Models
 
         [JsonProperty("lastName")]
         public string LastName { get; set; }
-
-        [JsonProperty("products")]
-        public object Products { get; set; }
-
-        [JsonProperty("customers")]
-        public object Customers { get; set; }
 
         [JsonProperty("id")]
         public Guid Id { get; set; }
