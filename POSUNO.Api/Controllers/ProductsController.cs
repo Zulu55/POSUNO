@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using POSUNO.Api.Data;
 using POSUNO.Api.Data.Entities;
+using POSUNO.Api.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace POSUNO.Api.Controllers
@@ -20,6 +22,23 @@ namespace POSUNO.Api.Controllers
         public ProductsController(DataContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        [Route("GetCount")]
+        public IActionResult GetCount()
+        {
+            return Ok(_context.Products.Count());
+        }
+
+        [HttpGet]
+        [Route("GetProductsPaged/{page}/{size}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPaged(int page, int size)
+        {
+            return await _context.Products
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
         }
 
         [HttpGet]
@@ -42,13 +61,32 @@ namespace POSUNO.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, ProductRequest request)
         {
-            if (id != product.Id)
+            if (id != request.Id)
             {
                 return BadRequest();
             }
 
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == email);
+            if (user == null)
+            {
+                return BadRequest("Usuario no existe.");
+            }
+
+            Product product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return BadRequest("Producto no existe.");
+            }
+
+            product.Name = request.Name;
+            product.Description = request.Description;
+            product.Price = request.Price;
+            product.Stock = request.Stock;
+            product.IsActive = request.IsActive;
+            product.User = user;
             _context.Entry(product).State = EntityState.Modified;
 
             try
@@ -67,19 +105,29 @@ namespace POSUNO.Api.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(product);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(ProductRequest request)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == product.User.Id);
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == email);
             if (user == null)
             {
                 return BadRequest("Usuario no existe.");
             }
 
-            product.User = user;
+            Product product = new Product
+            {
+                Description = request.Description,
+                IsActive = request.IsActive,
+                Name = request.Name,
+                Price = request.Price,
+                Stock = request.Stock,
+                User = user
+            };
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 

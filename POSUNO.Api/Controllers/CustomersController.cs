@@ -30,6 +30,23 @@ namespace POSUNO.Api.Controllers
             return await _context.Customers.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("GetCount")]
+        public IActionResult GetCount()
+        {
+            return Ok(_context.Customers.Count());
+        }
+
+        [HttpGet]
+        [Route("GetCustomersPaged/{page}/{size}")]
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomersPaged(int page, int size)
+        {
+            return await _context.Customers
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
